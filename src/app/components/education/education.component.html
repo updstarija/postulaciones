@@ -1,0 +1,621 @@
+<div class="container">
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical is-parent">
+      <article class="tile is-child notification is-primary box">
+        <p class="title">Educación Inicial / Colegio</p>
+        <p class="subtitle">Añade datos de tu educación colegio.</p>
+        <div class="content">
+          <div class="card mt-3" *ngFor="let item of colegios; let i = index">
+            <div class="card-content">
+              <div class="content">
+                <p class="is-size-5" style="line-height: 0.7">
+                  <strong style="text-transform: uppercase">{{
+                    item.Colegio
+                  }}</strong>
+                  <br />
+                  <span class="is-size-7">{{ item.Nivelestudio }}</span>
+                  <br />
+                  <span class="is-size-7"
+                    ><span style="text-transform: uppercase">{{
+                      item.Ciudad
+                    }}</span>
+                    {{ item.Pais }}
+                  </span>
+                  <br />
+                  <time class="is-size-7">
+                    <strong>Desde: &nbsp;</strong
+                    >{{ item.Fechaini | date: "dd/MM/y" }}</time
+                  >&nbsp;
+                  <time class="is-size-7">
+                    <strong>Hasta: &nbsp;</strong
+                    ><span>{{ item.Fechafin | date: "dd/MM/y" }}</span>
+                  </time>
+                </p>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a
+                class="card-footer-item"
+                (click)="showModalEditColegio(i, item)"
+                ><i class="fas fa-edit"></i
+              ></a>
+              <a
+                class="card-footer-item"
+                (click)="showModalDeleteColegio(i, item)"
+                ><i class="fas fa-trash-alt"></i
+              ></a>
+            </footer>
+          </div>
+          <button class="button is-link float" (click)="showModalNewColegio()">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </article>
+      <article class="tile is-child notification is-primary box">
+        <p class="title">Educación Técnica o Superior</p>
+        <p class="subtitle">Añade datos de tu educacion superior.</p>
+        <div class="content">
+          <div class="card mt-3" *ngFor="let item of superiores; let i = index">
+            <div class="card-content">
+              <div class="content">
+                <p class="is-size-5" style="line-height: 0.7">
+                  <strong style="text-transform: uppercase">{{
+                    item.Institucion
+                  }}</strong>
+                  <br />
+                  <strong class="is-size-7" style="text-transform: uppercase">{{
+                    item.Descripcion
+                  }}</strong>
+                  <br />
+                  <span class="is-size-7"
+                    ><span style="text-transform: uppercase">{{
+                      item.Ciudad
+                    }}</span>
+                    {{ item.Pais }}
+                  </span>
+                  <br />
+                  <br />
+                  <span class="is-size-6">{{ item.Nivelsuperior }}</span>
+                  <br />
+                  <time class="is-size-7">
+                    <strong>Desde: &nbsp;</strong
+                    >{{ item.Fechaini | date: "dd/MM/y" }}</time
+                  >&nbsp;
+                  <time *ngIf="!item.Actual" class="is-size-7">
+                    <strong>Hasta: &nbsp;</strong
+                    ><span>{{ item.Fechafin | date: "dd/MM/y" }}</span>
+                  </time>
+                  <time *ngIf="item.Actual" class="is-size-7">
+                    <span *ngIf="item.Actual">Actualmente estudio aquí.</span>
+                  </time>
+                </p>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a
+                class="card-footer-item"
+                (click)="showModalEditSuperior(i, item)"
+                ><i class="fas fa-edit"></i
+              ></a>
+              <a
+                class="card-footer-item"
+                (click)="showModalDeleteSuperior(i, item)"
+                ><i class="fas fa-trash-alt"></i
+              ></a>
+            </footer>
+          </div>
+          <button class="button is-link float" (click)="showModalNewSuperior()">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </article>
+    </div>
+    <div class="tile is-4 is-vertical is-parent">
+      <article class="tile is-child box notification is-info">
+        <p class="title">Idiomas</p>
+        <p class="subtitle">Añade los idiomas que hablas.</p>
+        <div class="content">
+          <div class="card mt-3" *ngFor="let item of idiomas; let i = index">
+            <div class="card-content">
+              <div class="content">
+                <p class="is-size-7" style="line-height: 1">
+                  <strong style="text-transform: uppercase">{{
+                    item.Idioma
+                  }}</strong>
+                  <br />
+                  <span class="is-size-7">Escritura: {{ item.Escrito }}. </span>
+                  <br />
+                  <span class="is-size-7">Lectura: {{ item.Lectura }}. </span>
+                  <br />
+                  <span class="is-size-7">Oral: {{ item.Oral }}. </span>
+                </p>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a class="card-footer-item" (click)="showModalEditIdioma(i, item)"
+                ><i class="fas fa-edit"></i
+              ></a>
+              <a
+                class="card-footer-item"
+                (click)="showModalDeleteIdioma(i, item)"
+                ><i class="fas fa-trash-alt"></i
+              ></a>
+            </footer>
+          </div>
+          <button class="button is-link float" (click)="showModalNewIdioma()">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="columns is-vcentered is-marginless">
+    <div class="column is-8"></div>
+    <div class="column is-2">
+      <button
+        class="button is-link is-outlined is-fullwidth m-1"
+        (click)="back()"
+      >
+        <span> Anterior </span>
+      </button>
+    </div>
+    <div class="column is-2">
+      <button
+        class="button is-link is-outlined is-fullwidth m-1"
+        [disabled]="
+          colegios.length == 0 || superiores.length == 0 || saving_next
+        "
+        (click)="next()"
+      >
+        <span *ngIf="!saving_next"> Siguiente </span>
+        <span *ngIf="saving_next"> Guardando...</span>
+      </button>
+    </div>
+  </div>
+</div>
+<form [formGroup]="formDataColegio">
+  <div class="modal" [ngClass]="{ 'is-active': showModalColegio }">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head has-background-primary">
+        <p class="modal-card-title has-text-light">Agregar Colegio</p>
+        <button
+          class="delete"
+          aria-label="close"
+          (click)="showModalColegio = false"
+        ></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">* Colegio</label>
+          <div class="control is-small">
+            <input
+              formControlName="Colegio"
+              class="input"
+              type="text"
+              placeholder="Ingresa el colegio"
+              maxlength="50"
+            />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">* Nivel</label>
+          <div class="select is-fullwidth">
+            <select formControlName="Idnivelestudio">
+              <option [value]="item.Id" *ngFor="let item of nivelColegios">
+                {{ item.Descripcion }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="columns s-mobile is-multiline is-marginless">
+          <div class="column">
+            <div class="field">
+              <label class="label">* Pais</label>
+              <div class="select is-fullwidth">
+                <select formControlName="Idpais">
+                  <option [value]="item.Id" *ngFor="let item of paises">
+                    {{ item.Nombre }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">* Ciudad</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Ciudad"
+                  class="input"
+                  type="text"
+                  placeholder="Ingresa la ciudad"
+                  maxlength="50"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="columns s-mobile is-multiline is-marginless">
+          <div class="column">
+            <div class="field">
+              <label class="label">* Fecha de Inicio</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Fechaini"
+                  class="input"
+                  type="date"
+                  placeholder="Ingresa fecha inicio"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label"> Fecha de Fin</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Fechafin"
+                  class="input"
+                  type="date"
+                  placeholder="Ingresa fecha de finalización"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-block">* Campos obligatorios</div>
+      </section>
+      <footer class="modal-card-foot">
+        <button
+          class="button is-success"
+          [disabled]="!formDataColegio.valid || savingColegio"
+          (click)="saveColegio()"
+        >
+          <span class="icon is-small">
+            <i class="far fa-save"></i>
+          </span>
+          <span *ngIf="!savingColegio"> Guardar </span>
+          <span *ngIf="savingColegio"> Guardando...</span>
+        </button>
+        <button class="button is-danger" (click)="showModalColegio = false">
+          <span class="icon is-small">
+            <i class="fas fa-ban"></i>
+          </span>
+          <span>Cancelar</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+</form>
+
+<div class="modal" [ngClass]="{ 'is-active': showModalBorrarColegio }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Borrar Colegio</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showModalBorrarColegio = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      Esta seguro que desea eliminar el registro del colegio?
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-success"
+        [disabled]="deletingColegio"
+        (click)="deleteColegio()"
+      >
+        <span class="icon is-small">
+          <i class="far fa-save"></i>
+        </span>
+        <span *ngIf="!deletingColegio"> Borrar </span>
+        <span *ngIf="deletingColegio"> Borrando...</span>
+      </button>
+      <button class="button is-danger" (click)="showModalBorrarColegio = false">
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cancelar</span>
+      </button>
+    </footer>
+  </div>
+</div>
+
+<form [formGroup]="formDataSuperior">
+  <div class="modal" [ngClass]="{ 'is-active': showModalSuperior }">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head has-background-primary">
+        <p class="modal-card-title has-text-light">Agregar Estudio Superior</p>
+        <button
+          class="delete"
+          aria-label="close"
+          (click)="showModalSuperior = false"
+        ></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="columns s-mobile is-multiline is-marginless">
+          <div class="column">
+            <div class="field">
+              <label class="label">* Institución</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Institucion"
+                  class="input"
+                  type="text"
+                  placeholder="Ingresa el nombre de la Institución."
+                  maxlength="50"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">* Nivel</label>
+              <div class="select is-fullwidth">
+                <select formControlName="Idnivelsuperior">
+                  <option
+                    [value]="item.Id"
+                    *ngFor="let item of nivelSuperiores"
+                  >
+                    {{ item.Descripcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">* Descripción</label>
+          <div class="control is-small">
+            <input
+              formControlName="Descripcion"
+              class="input"
+              type="text"
+              placeholder="Ingresa la descripción."
+              maxlength="50"
+            />
+          </div>
+        </div>
+        <div class="columns s-mobile is-multiline is-marginless">
+          <div class="column">
+            <div class="field">
+              <label class="label">* Pais</label>
+              <div class="select is-fullwidth">
+                <select formControlName="Idpais">
+                  <option [value]="item.Id" *ngFor="let item of paises">
+                    {{ item.Nombre }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">* Ciudad</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Ciudad"
+                  class="input"
+                  type="text"
+                  placeholder="Ingresa la ciudad"
+                  maxlength="50"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="columns s-mobile is-multiline is-marginless">
+          <div class="column">
+            <div class="field">
+              <label class="label">* Fecha de Inicio</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Fechaini"
+                  class="input"
+                  type="date"
+                  placeholder="Ingresa fecha inicio"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field" *ngIf="!formDataSuperior.value.Actual">
+              <label class="label"> Fecha de Fin</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Fechafin"
+                  class="input"
+                  type="date"
+                  placeholder="Ingresa fecha de finalización"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="Actual" />
+            Estudio actualmente aquí.
+          </label>
+        </div>
+        <div class="panel-block">* Campos obligatorios</div>
+      </section>
+      <footer class="modal-card-foot">
+        <button
+          class="button is-success"
+          [disabled]="!formDataSuperior.valid || savingSuperior"
+          (click)="saveSuperior()"
+        >
+          <span class="icon is-small">
+            <i class="far fa-save"></i>
+          </span>
+          <span *ngIf="!savingSuperior"> Guardar </span>
+          <span *ngIf="savingSuperior"> Guardando...</span>
+        </button>
+        <button class="button is-danger" (click)="showModalSuperior = false">
+          <span class="icon is-small">
+            <i class="fas fa-ban"></i>
+          </span>
+          <span>Cancelar</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+</form>
+
+<div class="modal" [ngClass]="{ 'is-active': showModalBorrarSuperior }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Borrar estudio superior</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showModalBorrarSuperior = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      Esta seguro que desea eliminar el registro del estudio superior?
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-success"
+        [disabled]="deletingSuperior"
+        (click)="deleteSuperior()"
+      >
+        <span class="icon is-small">
+          <i class="far fa-save"></i>
+        </span>
+        <span *ngIf="!deletingSuperior"> Borrar </span>
+        <span *ngIf="deletingSuperior"> Borrando...</span>
+      </button>
+      <button
+        class="button is-danger"
+        (click)="showModalBorrarSuperior = false"
+      >
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cancelar</span>
+      </button>
+    </footer>
+  </div>
+</div>
+<form [formGroup]="formDataIdioma">
+  <div class="modal" [ngClass]="{ 'is-active': showModalIdioma }">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head has-background-primary">
+        <p class="modal-card-title has-text-light">Agregar Idioma</p>
+        <button
+          class="delete"
+          aria-label="close"
+          (click)="showModalIdioma = false"
+        ></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">* Idioma</label>
+          <div class="select is-fullwidth">
+            <select formControlName="Ididioma">
+              <option [value]="item.Id" *ngFor="let item of idiomasAll">
+                {{ item.Nombre }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">* Escritura</label>
+          <div class="select is-fullwidth">
+            <select formControlName="Idescrito">
+              <option [value]="item.Id" *ngFor="let item of nivelIdiomas">
+                {{ item.Descripcion }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">* Lectura</label>
+          <div class="select is-fullwidth">
+            <select formControlName="Idlectura">
+              <option [value]="item.Id" *ngFor="let item of nivelIdiomas">
+                {{ item.Descripcion }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">* Oral</label>
+          <div class="select is-fullwidth">
+            <select formControlName="Idoral">
+              <option [value]="item.Id" *ngFor="let item of nivelIdiomas">
+                {{ item.Descripcion }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="panel-block">* Campos obligatorios</div>
+      </section>
+      <footer class="modal-card-foot">
+        <button
+          class="button is-success"
+          [disabled]="!formDataIdioma.valid || savingIdioma"
+          (click)="saveIdioma()"
+        >
+          <span class="icon is-small">
+            <i class="far fa-save"></i>
+          </span>
+          <span *ngIf="!savingIdioma"> Guardar </span>
+          <span *ngIf="savingIdioma"> Guardando...</span>
+        </button>
+        <button class="button is-danger" (click)="showModalIdioma = false">
+          <span class="icon is-small">
+            <i class="fas fa-ban"></i>
+          </span>
+          <span>Cancelar</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+</form>
+
+<div class="modal" [ngClass]="{ 'is-active': showModalBorrarIdioma }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Borrar Idioma</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showModalBorrarIdioma = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      Esta seguro que desea eliminar el registro del idioma?
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-success"
+        [disabled]="deletingIdioma"
+        (click)="deleteIdioma()"
+      >
+        <span class="icon is-small">
+          <i class="far fa-save"></i>
+        </span>
+        <span *ngIf="!deletingIdioma"> Borrar </span>
+        <span *ngIf="deletingIdioma"> Borrando...</span>
+      </button>
+      <button class="button is-danger" (click)="showModalBorrarIdioma = false">
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cancelar</span>
+      </button>
+    </footer>
+  </div>
+</div>

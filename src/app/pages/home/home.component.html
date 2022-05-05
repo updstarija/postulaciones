@@ -1,0 +1,334 @@
+<nav class="navbar">
+  <div class="container is-widescreen">
+    <div class="navbar-brand">
+      <a class="navbar-item" [href]="'/'">
+        <img
+          src="/Postulaciones/assets/images/logo-azul.png"
+          alt="smartmedical logo"
+          class="logo is-hidden-mobile"
+        />
+        <img
+          src="https://www.colombianosune.com/sites/default/files/asociaciones/NO_disponible-43_14.jpg"
+          alt="smartmedical logo"
+          class="logo is-hidden-tablet"
+        />
+      </a>
+      <a class="navbar-item is-hidden-desktop cart" routerLink="/pago">
+        <span class="icon">
+          <i class="gg-shopping-cart big"></i>
+        </span>
+      </a>
+      <span class="navbar-burger burger" (click)="menu = !menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </div>
+    <div class="navbar-menu" [ngClass]="{ 'is-active': menu }">
+      <div class="navbar-end">
+        <a class="navbar-item" (click)="scroll(inicio)"> INICIO </a>
+        <a class="navbar-item" (click)="scroll(postulacion)">
+          POSTULACIONES
+        </a>
+        <a class="navbar-item" (click)="scroll(nosotros)"> NOSOTROS </a>
+        <a class="navbar-item" (click)="scroll(footerContact)"> CONTACTOS </a>
+        <a class="navbar-item">
+          <app-login></app-login>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+<a
+  class="button is-rounded shop-mobile is-hidden-desktop"
+  [ngClass]="{ show: showShop }"
+  (click)="scroll(postulacion, null, 'boton-comprar-mobile')"
+>
+  POSTULAR AHORA
+</a>
+<div class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <figure class="image is-16by9">
+      <iframe
+        class="has-ratio"
+        width="720"
+        height="480"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </figure>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<section class="hero is-fullheight" #inicio id="inicio">
+  <!-- Hero content: will be in the middle -->
+  <div class="play is-hidden-desktop">
+    <span></span>
+  </div>
+  <div class="hero-body">
+    <div class="container is-widescreen">
+      <div class="columns is-mobile is-multiline is-marginless">
+        <div
+          class="column is-5-desktop is-12-mobile is-12-tablet"
+          style="position: relative; z-index: 1"
+        >
+          <h2 class="title is-margin-top">
+            Portal web UPDS para postulación de docentes.
+          </h2>
+          <h3 class="subtitle">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet
+            voluptates, architecto sapiente quos delectus veritatis deserunt
+            earum vitae, voluptatem illo debitis molestiae. Expedita incidunt
+            quibusdam obcaecati enim veritatis quasi magni?
+          </h3>
+          <div class="buttons">
+            <button class="button is-primary is-medium" (click)="scroll(postulacion)">Postular Ahora</button>
+            <button class="button is-primary is-outlined is-medium">
+              Más Información
+            </button>
+          </div>
+        </div>
+        <div class="column is-2-desktop is-hidden-touch">
+          <div class="play">
+            <span></span>
+          </div>
+        </div>
+        <div class="column is-5-desktop is-hidden-mobile"></div>
+      </div>
+    </div>
+    <img
+      src="/Postulaciones/assets/images/banner-hd.jpg"
+      alt="sonomask-banner"
+      class="banner"
+    />
+  </div>
+</section>
+<!-- <section #caracteristicas id="caracteristicas">
+  <div class="container is-widescreen">
+    <div class="columns is-mobile is-multiline is-marginless">
+      <div class="column is-12-tablet is-12-mobile is-7-desktop">
+        <h4 class="title">Características y Especificaciones</h4>
+        <p class="subtitle is-6">
+          Nuestra tecnología basada en ultrasonido recubre de manera duradera
+          los textiles con nuestras soluciones cuidadosamente diseñadas. Esto
+          asegura que nuestras telas permanezcan protectoras por más tiempo y
+          les permite ser reutilizables y lavables.
+        </p>
+        <div class="columns is-mobile is-multiline">
+          <div class="column is-6-tablet is-12-mobile">
+            <div class="card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-64x64">
+                      <img
+                        class="is-rounded"
+                        src="https://www.colombianosune.com/sites/default/files/asociaciones/NO_disponible-43_14.jpg"
+                        alt="Antigermenes"
+                      />
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="subtitle is-4">Anti-Gérmenes</p>
+                  </div>
+                </div>
+                <p class="content">
+                  Tejido antimicrobiano científicamente comprobado garantiza una
+                  protección duradera.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-12-mobile">
+            <div class="card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-64x64">
+                      <img
+                        class="is-rounded"
+                        src="https://www.colombianosune.com/sites/default/files/asociaciones/NO_disponible-43_14.jpg"
+                        alt="Multilavable"
+                      />
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="subtitle is-4">Multi-Lavable</p>
+                  </div>
+                </div>
+                <p class="content">
+                  La mezcla de algodón y poliéster con recubrimiento de zinc se
+                  prueba para que sea efectiva incluso después de haberla lavado
+                  100 veces.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-12-mobile">
+            <div class="card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-64x64">
+                      <img
+                        class="is-rounded"
+                        src="https://www.colombianosune.com/sites/default/files/asociaciones/NO_disponible-43_14.jpg"
+                        alt="Confortable"
+                      />
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="subtitle is-4">Confortable</p>
+                  </div>
+                </div>
+                <p class="content">
+                  A diferencia de otras máscaras, las Sonomasks son
+                  transpirables y ajustables para una comodidad duradera.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="column is-6-tablet is-12-mobile">
+            <div class="card">
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-left">
+                    <figure class="image is-64x64">
+                      <img
+                        class="is-rounded"
+                        src="https://www.colombianosune.com/sites/default/files/asociaciones/NO_disponible-43_14.jpg"
+                        alt="Resistente"
+                      />
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="subtitle is-4">Resistente</p>
+                  </div>
+                </div>
+                <p class="content">
+                  Nuestro novedoso método de recubrimiento combina los textiles
+                  con nuestros productos químicos, haciéndolos potentes para
+                  hasta 100 lavados
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column is-12-mobile">
+        <img
+          src="https://www.colombianosune.com/sites/default/files/asociaciones/NO_disponible-43_14.jpg"
+          alt="sonomask"
+          class="sonomask"
+        />
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<section class="hero is-margin-top is-medium is-primary banner-background">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title is-3">Infecciones Adquiridas en Hospital</h1>
+      <h2 class="subtitle is-5">
+        Los pacientes en los hospitales están expuestos a millones de bacterias
+        que causan infecciones posteriores al tratamiento, lo que puede provocar
+        complicaciones médicas, estadías prolongadas en el hospital y la muerte
+      </h2>
+      <div class="columns is-mobile is-multiline is-marginless">
+        <div class="column is-4-tablet is-12-mobile">
+          <div class="card is-primary">
+            <div class="card-content">
+              <strong class="title is-1">30%</strong>
+              <p class="content">
+                De los pacientes en UCI se ven afectados por infecciones
+                asociadas a la atención médica.
+              </p>
+              <strong class="quotes">"</strong>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4-tablet is-12-mobile">
+          <div class="card is-primary">
+            <div class="card-content">
+              <strong class="title is-2">150 mil</strong>
+              <p class="content">
+                Las muertes cada año se atribuyen a infecciones adquiridas en
+                hospitales en los EE. UU. Y Europa.
+              </p>
+              <strong class="quotes">"</strong>
+            </div>
+          </div>
+        </div>
+        <div class="column is-4-tablet is-12-mobile">
+          <div class="card is-primary">
+            <div class="card-content">
+              <strong class="title is-4">14 Billones $us.</strong>
+              <p class="content">
+                Perdida debido a estadía hospitalaria adicional por infecciones
+                relacionadas con la atención médica.
+              </p>
+              <strong class="quotes">"</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section #postulacion id="postulacion">
+  <div class="container">
+    <div class="columns is-mobile is-multiline is-marginless">
+      <div class="column is-12">
+        <h4 class="title">Postular Ahora</h4>
+      </div>
+      <div class="column is-12" *ngIf="postulaciones.length == 0">
+        <app-loader></app-loader>
+      </div>
+      <div
+        class="column is-6-tablet is-12-mobile is-3-desktop"
+        *ngFor="let item of postulaciones"
+      >
+        <app-item [item]="item" (click)="VerDetalle(item)"></app-item>
+      </div>
+    </div>
+  </div>
+</section>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  class="diagonal-top"
+  viewBox="0 0 100 10"
+  preserveAspectRatio="none"
+>
+  <polygon points="100 0 100 10 0 10" />
+</svg>
+<section #original id="original"></section>
+
+<section #nosotros id="nosotros">
+  <div class="container">
+    <div class="columns is-mobile is-multiline is-marginless">
+      <div class="column is-4-tablet is-12-mobile">
+        <h4 class="title">Quienes Somos</h4>
+        <img style="width: 250px; height: 250px;"
+          src="/Postulaciones/assets/images/logo.png"
+          alt="nosotros"
+        />
+      </div>
+      <div class="column is-8-tablet is-12-mobile">
+        <p class="subtitle is-5 vertical-center">
+          <strong>MISIÓN</strong>
+          <br/>
+          Somos una institución de educación superior con reconocimiento nacional y relaciones internacionales, que genera cambio en las personas a través del conocimiento e investigación, gestionado por talento humano comprometido con nuestro proceso de enseñanza y aprendizaje de calidad, para desarrollar emprendedores socialmente responsables.
+          <br />
+          <br />
+          <strong>VISIÓN</strong>
+          <br/>
+          Ser la red nacional de educación superior más importante de Bolivia con trascendencia internacional; aportando al desarrollo integral del país mediante la formación académica de calidad y la investigación.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<section #footerContact id="contactos"></section>

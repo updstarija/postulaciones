@@ -1,0 +1,179 @@
+<button
+  class="button is-rounded shop"
+  data-target="modal"
+  aria-haspopup="true"
+  (click)="showLogin = true"
+>
+  INGRESAR
+</button>
+<div class="modal" [ngClass]="{ 'is-active': showLogin }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Ingreso al Sitio</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showLogin = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      <!-- Content ... -->
+      <div class="field">
+        <p class="control has-icons-left has-icons-right">
+          <input
+            class="input"
+            [(ngModel)]="user"
+            type="email"
+            placeholder="Email"
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <span class="icon is-small is-right">
+            <i class="fas fa-check"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control has-icons-left">
+          <input
+            class="input"
+            type="password"
+            [(ngModel)]="password"
+            placeholder="Password"
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </p>
+      </div>
+      <div class="has-text-centered">
+        <button class="button is-text" (click)="create()">
+          No tienes cuenta? Regístrate
+        </button>
+        <div class="notification is-danger" *ngIf="errorLogin">
+          <button class="delete"></button>
+          Usuario no valido, por favor intenta de nuevo
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" [disabled]="loading" (click)="login()">
+        <span *ngIf="!loading">Iniciar Sesión</span>
+        <span *ngIf="loading">Conectando...</span>
+      </button>
+      <button class="button" (click)="showLogin = false">Cancelar</button>
+    </footer>
+  </div>
+</div>
+<form [formGroup]="formCreate">
+  <div class="modal" [ngClass]="{ 'is-active': showCreate }">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Crear cuenta</p>
+        <button class="delete" aria-label="close" (click)="cancel()"></button>
+      </header>
+      <section class="modal-card-body">
+        <!-- Content ... -->
+        <div class="field">
+          <label class="label">* Nombres</label>
+          <div class="control is-small">
+            <input
+              formControlName="Nombre"
+              class="input"
+              type="text"
+              placeholder="Ingresa tus nombres"
+            />
+          </div>
+        </div>
+        <div class="columns s-mobile is-multiline is-marginless">
+          <div class="column">
+            <div class="field">
+              <label class="label">* Paterno</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Paterno"
+                  class="input"
+                  type="text"
+                  placeholder="Ingresa tu apellido paterno"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">Materno</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Materno"
+                  class="input"
+                  type="text"
+                  placeholder="Ingresa tu apellido materno"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">* Correo</label>
+          <div class="control is-small">
+            <input
+              formControlName="Correo"
+              class="input"
+              type="text"
+              placeholder="Ingresa tu correo"
+            />
+          </div>
+        </div>
+        <div class="columns s-mobile is-multiline is-marginless">
+          <div class="column">
+            <div class="field">
+              <label class="label">* Contraseña</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Password"
+                  class="input"
+                  type="password"
+                  placeholder="Ingresa tu contraseña"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">* Repetir Contraseña</label>
+              <div class="control is-small">
+                <input
+                  formControlName="PasswordRepeat"
+                  class="input"
+                  type="password"
+                  placeholder="Repite tu contraseña"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-block">* Campos obligatorios</div>
+        <div class="has-text-centered">
+          <div class="notification is-danger" *ngIf="errorCreate">
+            <button class="delete"></button>
+            Error al craer el usuario
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button
+          class="button is-success"
+          [disabled]="!formCreate.valid || saving"
+          (click)="save()"
+        >
+          <span *ngIf="!loading">Registrar</span>
+          <span *ngIf="loading">Registrando...</span>
+        </button>
+        <button class="button" (click)="cancel()">Cancelar</button>
+      </footer>
+    </div>
+  </div>
+</form>

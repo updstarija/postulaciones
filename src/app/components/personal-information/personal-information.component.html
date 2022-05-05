@@ -1,0 +1,164 @@
+<form [formGroup]="formData">
+  <div class="container">
+    <nav class="panel">
+      <p class="panel-heading">Datos Personales</p>
+      <div class="columns s-mobile is-multiline is-marginless">
+        <div class="column">
+          <div class="field">
+            <label class="label">* Nombres</label>
+            <div class="control is-small">
+              <input
+                formControlName="Nombre"
+                class="input"
+                type="text"
+                placeholder="Ingresa tus nombres"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">* Paterno</label>
+            <div class="control is-small">
+              <input
+                formControlName="Paterno"
+                class="input"
+                type="text"
+                placeholder="Ingresa tu apellido paterno"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">Materno</label>
+            <div class="control is-small">
+              <input
+                formControlName="Materno"
+                class="input"
+                type="text"
+                placeholder="Ingresa tu apellido materno"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns s-mobile is-multiline is-marginless">
+        <div class="column">
+          <div class="field">
+            <label class="label">* Nacionalidad</label>
+            <div class="select is-fullwidth">
+              <select formControlName="Idnacionalidad">
+                <option [value]="item.Id" *ngFor="let item of paises">
+                  {{ item.Nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">* Documento</label>
+            <div class="control is-small">
+              <input
+                formControlName="Documento"
+                class="input"
+                type="text"
+                placeholder="Ingresa tu documento"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">* Fecha de Nacimiento</label>
+            <div class="control is-small">
+              <input
+                formControlName="Fechanac"
+                class="input"
+                type="date"
+                placeholder="Ingresa tu documento"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns s-mobile is-multiline is-marginless">
+        <div class="column">
+          <div class="field">
+            <label class="label">* Genero</label>
+            <div class="select is-fullwidth">
+              <select formControlName="Sexo">
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">* Estado Civil</label>
+            <div class="select is-fullwidth">
+              <select formControlName="Estadocivil">
+                <option value="C">Casado(a)</option>
+                <option value="S">Soltero(a)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">* Celular</label>
+            <div class="control is-small">
+              <input
+                formControlName="Celular"
+                class="input"
+                type="text"
+                placeholder="Ingresa tu celular"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">* Correo</label>
+            <div class="control is-small">
+              <input
+                formControlName="Correo"
+                class="input"
+                type="text"
+                placeholder="Ingresa tu correo"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns s-mobile is-multiline is-marginless">
+        <div class="column">
+          <div class="field">
+            <label class="label">Dirección</label>
+            <textarea
+              formControlName="Direccion"
+              class="textarea"
+              placeholder="Escribe tu dirección"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="panel-block">* Campos obligatorios</div>
+      <div class="columns is-vcentered is-marginless">
+        <div class="column is-10"></div>
+        <div class="column is-2">
+          <button
+            class="button is-link is-outlined is-fullwidth m-1"
+            [disabled]="!formData.valid || saving"
+            (click)="save()"
+          >
+            <span *ngIf="!saving"> Siguiente </span>
+            <span *ngIf="saving"> Guardando...</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </div>
+</form>

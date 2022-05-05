@@ -1,0 +1,26 @@
+<section class="hero banner">
+  <div class="hero-body">
+    <p class="title text-white">Postulaciones</p>
+    <p class="subtitle text-gray">Lista de postulaciones</p>
+  </div>
+</section>
+<section class="section container">
+  <!-- <h1 class="title">Últimas postulaciones</h1>
+  <h2 class="subtitle">
+    Aqui se listan las ultimas postulaciones para docencia en nuestra
+    universidad <strong>Postula</strong>, en aquella que cumplas los requisitos.
+  </h2> -->
+  <div class="container">
+    <div class="columns mt-3 s-mobile is-multiline is-marginless">
+      <div class="column is-12" *ngIf="postulaciones.length == 0">
+        <app-loader></app-loader>
+      </div>
+      <div
+        class="column is-6-tablet is-12-mobile is-3-desktop"
+        *ngFor="let item of postulaciones"
+      >
+        <app-item [item]="item" (click)="VerDetalle(item)"></app-item>
+      </div>
+    </div>
+  </div>
+</section>

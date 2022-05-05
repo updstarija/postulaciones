@@ -1,0 +1,22 @@
+.banner {
+  background-color: #223b87;
+  color: white;
+}
+.text-white {
+  color: white;
+}
+.text-gray {
+  color: rgb(192, 189, 189);
+}
+.disabled {
+  pointer-events: none; //This makes it not clickable
+  opacity: 0.6; //This grays it out to look disabled
+}
+@media only screen and (max-width: 480px) {
+  .tabs ul {
+    flex-direction: column;
+    li {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,82 @@
+<section class="hero banner">
+  <div class="hero-body">
+    <p class="title text-white">Curriculum</p>
+    <p class="subtitle text-gray">
+      Completa todos los requisitos para poder publicar tu curriculum y asi
+      postular a una materia.
+    </p>
+  </div>
+</section>
+<div class="m-3">
+  <div class="tabs is-toggle">
+    <ul>
+      <li [ngClass]="{ 'is-active': tab == 1 }" (click)="changeTab(1)">
+        <a>
+          <span class="icon is-small"
+            ><i class="fas fa-user" aria-hidden="true"></i
+          ></span>
+          <span>Datos Pesonales</span>
+        </a>
+      </li>
+      <li
+        [ngClass]="{ 'is-active': tab == 2, disabled: tab < 2 }"
+        (click)="changeTab(2)"
+      >
+        <a>
+          <span class="icon is-small"
+            ><i class="fas fa-user-tie" aria-hidden="true"></i
+          ></span>
+          <span>Experiencia Laboral</span>
+        </a>
+      </li>
+      <li
+        [ngClass]="{ 'is-active': tab == 3, disabled: tab < 3 }"
+        (click)="changeTab(3)"
+      >
+        <a>
+          <span class="icon is-small"
+            ><i class="fas fa-graduation-cap" aria-hidden="true"></i
+          ></span>
+          <span>Educación</span>
+        </a>
+      </li>
+      <li
+        [ngClass]="{ 'is-active': tab == 4, disabled: tab < 4 }"
+        (click)="changeTab(4)"
+      >
+        <a>
+          <span class="icon is-small"
+            ><i class="fas fa-file-alt" aria-hidden="true"></i
+          ></span>
+          <span>Información General</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="section">
+    <div class="content-tab" *ngIf="tab == 1">
+      <div>
+        <app-personal-information
+          (changeTab)="changeTabGlobal($event)"
+        ></app-personal-information>
+      </div>
+    </div>
+    <div class="content-tab" *ngIf="tab == 2">
+      <div>
+        <app-experience (changeTab)="changeTabGlobal($event)"></app-experience>
+      </div>
+    </div>
+    <div class="content-tab" *ngIf="tab == 3">
+      <div>
+        <app-education (changeTab)="changeTabGlobal($event)"></app-education>
+      </div>
+    </div>
+    <div class="content-tab" *ngIf="tab == 4">
+      <div>
+        <app-general-information
+          (changeTab)="changeTabGlobal($event)"
+        ></app-general-information>
+      </div>
+    </div>
+  </div>
+</div>

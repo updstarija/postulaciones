@@ -1,0 +1,189 @@
+<!-- <section class="hero banner">
+    <div class="hero-body">
+      <p class="title text-white">Usuarios</p>
+      <p class="subtitle text-gray">Detalle del listado de usuarios</p>
+    </div>
+  </section> -->
+<div class="container">
+  <article class="panel is-primary mt-3 mb-3">
+    <p class="panel-heading mb-5">
+      Usuarios
+    </p>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table is-striped row-border hove">
+    <thead>
+      <tr>
+        <th>Nro</th>
+        <th>Nombre</th>
+        <th>Paterno</th>
+        <th>Usuario</th>
+        <th>Password</th>
+        <th class="has-text-centered boton">
+          <button class="button is-primary is-small is-light" data-target="modal" (click)="Nuevo()">
+          <span>Nuevo</span>
+          <span class="icon is-small">
+            <i class="fas fa-plus-circle"></i>
+          </span>
+        </button></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of usuarios;let i=index">
+        <td>{{i+1}}</td>
+        <td>{{item.Nombre}}</td>
+        <td>{{item.Paterno}}</td>
+        <td>{{item.Nomusu}}</td>
+        <td>
+          <div class="celda">
+            {{item.Password}}
+          </div>
+        <td>
+          <button class="button is-text is-small has-text-primary" (click)="Edit(item)"><i class="fas fa-pencil-alt"></i></button>
+          <button class="button is-text is-small has-text-primary" (click)="Confirm(item)"><i class="fas fa-trash-alt"></i></button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  </article>
+</div>
+
+<form [formGroup]="formCreate">
+  <div class="modal" [ngClass]="{ 'is-active': showModal }">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head has-background-primary">
+        <p class="modal-card-title has-text-light">Registrar usuario</p>
+        <button class="delete" aria-label="close" (click)="Cancel()"></button>
+      </header>
+      <section class="modal-card-body">
+        <!-- Content ... -->
+        <div class="field">
+          <label class="label">* Nombres</label>
+          <div class="control is-small">
+            <input
+              formControlName="Nombre"
+              class="input"
+              type="text"
+              placeholder="Ingresa tus nombres"
+            />
+          </div>
+        </div>
+        <div class="columns s-mobile is-multiline is-marginless">
+          <div class="column">
+            <div class="field">
+              <label class="label">* Paterno</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Paterno"
+                  class="input"
+                  type="text"
+                  placeholder="Ingresa tu apellido paterno"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">Materno</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Materno"
+                  class="input"
+                  type="text"
+                  placeholder="Ingresa tu apellido materno"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">* Correo</label>
+          <div class="control is-small">
+            <input
+              formControlName="Correo"
+              class="input"
+              type="text"
+              placeholder="Ingresa tu correo"
+            />
+          </div>
+        </div>
+        <div class="columns s-mobile is-multiline is-marginless">
+          <div class="column">
+            <div class="field">
+              <label class="label">* Contraseña</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Password"
+                  class="input"
+                  type="password"
+                  placeholder="Ingresa tu contraseña"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">* Repetir Contraseña</label>
+              <div class="control is-small">
+                <input
+                  formControlName="PasswordRepeat"
+                  class="input"
+                  type="password"
+                  placeholder="Repite tu contraseña"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-block">* Campos obligatorios</div>
+        <!-- <div class="has-text-centered">
+          <div class="notification is-danger" *ngIf="errorCreate">
+            <button class="delete"></button>
+            Error al craer el usuario
+          </div>
+        </div> -->
+      </section>
+      <footer class="modal-card-foot">
+        <button
+          class="button is-primary is-link is-outlined"
+          [disabled]="!formCreate.valid || saving"
+          (click)="Save()"
+        >
+          <span *ngIf="!loading">Registrar</span>
+          <span *ngIf="loading">Registrando...</span>
+        </button>
+        <button class="button is-danger is-link is-outlined" (click)="Cancel()">Cancelar</button>
+      </footer>
+    </div>
+  </div>
+</form>
+
+<div class="modal" [ngClass]="{ 'is-active': showConfirm }">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="box">
+      <article class="media">
+        <div class="media-content">
+          <div class="content has-text-centered">
+            <p>
+             <strong>¿Estas seguro de desea eliminar el usuario?</strong> 
+            </p>
+          </div>
+          <div class="level has-text-centered">
+            <a class="level-item" aria-label="retweet" (click)="Delete()">
+                <span class="icon">
+                  <i class="far fa-check-circle fa-lg"></i>
+                </span>
+             </a>
+            <a class="level-item" aria-label="like" (click)="showConfirm=false">
+                <span class="icon has-text-danger">
+                  <i class="fas fa-ban fa-lg"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>

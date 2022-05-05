@@ -1,0 +1,310 @@
+<div class="container is-fluid mt-1">
+  <article class="panel is-primary">
+    <p class="panel-heading">Terna Docente</p>
+    <div class="columns is-vcentered is-marginless p-2">
+      <div class="column is-9">
+        <div class="field">
+          <label class="label">* Modulo</label>
+          <div class="select is-fullwidth">
+            <select [(ngModel)]="modulo">
+              <option [value]="item.Id" *ngFor="let item of modulos">
+                {{ item.Nombre }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="column is-1">
+        <div class="field">
+          <label class="label">&nbsp;</label>
+          <button
+            class="button is-primary"
+            aria-label="like"
+            (click)="getOfertasTerna()"
+            [disabled]="loading"
+            [ngClass]="{ 'is-loading': loading }"
+          >
+            Listar
+          </button>
+
+        </div>
+      </div>
+      <div class="column is-2">
+        <div class="field">
+          <label class="label">&nbsp;</label>
+          <button
+            class="button is-primary"
+            aria-label="like"
+            (click)="exportExcel()"
+            [disabled]="ofertas.length<=0"
+          >
+            Exportar a Excel
+          </button>
+
+        </div>
+      </div>
+    </div>
+    <p class="panel-tabs">
+      <a [ngClass]="{ 'is-active': turno === 0 }" (click)="changeTurno(0)"
+        >Todos</a
+      >
+      <a [ngClass]="{ 'is-active': turno === 1 }" (click)="changeTurno(1)"
+        >Mañana</a
+      >
+      <a [ngClass]="{ 'is-active': turno === 4 }" (click)="changeTurno(4)"
+        >Medio Dia</a
+      >
+      <a [ngClass]="{ 'is-active': turno === 2 }" (click)="changeTurno(2)"
+        >Tarde</a
+      >
+      <a [ngClass]="{ 'is-active': turno === 3 }" (click)="changeTurno(3)"
+        >Noche</a
+      >
+    </p>
+    <div class="panel-block">
+      <div class="column is-12" style="margin:0 auto" *ngIf="loading">
+        <app-loader></app-loader>
+      </div>
+      <div *ngIf="!loading" style="width: 100%;">
+        <table class="table is-bordered is-fullwidth" style="font-size: 12px;">
+          <thead class="has-background-info-dark">
+            <tr>
+              <th class="has-text-light">Nro</th>
+              <th class="has-text-light">Carreras</th>
+              <th class="has-text-light">Equ.</th>
+              <th class="has-text-light">Materia</th>
+              <th class="has-text-light">Turno</th>
+              <th class="has-text-light">A.P.</th>
+              <th class="has-text-light">Cupo</th>
+              <th class="has-text-light">Jefe Carrera</th>
+              <th class="has-text-light">Docente</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of ofertas; let i = index">
+              <td>{{i+1}}</td>
+              <td>
+                <table style="border: 0;width: 100%;">
+                  <tr style="border: 0" *ngFor="let c of item.Listacarrera">
+                    <td style="border: 0;width: 70%;">{{ c.Nombre }}</td>
+                    <td style="border: 0;width: 30%;">Sem - {{ c.Semestre }}</td>
+                  </tr>
+                </table>
+                <!--<span style="font-size: 10px"
+                  ><a (click)="addCarrera(item)">Agregar +</a></span
+                >-->
+              </td>
+              <td>
+                <span *ngIf="item.Equivalente == 'POR COMPETENCIAS'">MEC</span
+                ><span *ngIf="item.Equivalente == 'POR OBJETIVO'">OBJ</span>
+              </td>
+              <td>{{ item.Materia }}</td>
+              <td>
+                <span *ngIf="item.Idturno==1">Mañana</span>
+                <span *ngIf="item.Idturno==2">Tarde</span>
+                <span *ngIf="item.Idturno==3">Noche</span>
+                <span *ngIf="item.Idturno==4">Medio día</span>
+              </td>
+              <td>{{ item.Alumnosproyectados }}</td>
+              <td>
+                <input type="number"      [disabled]="saving" class="input" [(ngModel)]="item.Cupo" style="font-size: 12px" />
+              </td>
+              <td>
+                <div class="select is-fullwidth">
+                  <select
+                    [(ngModel)]="item.Idjefecarrera"
+                    [disabled]="saving"
+                  >
+                    <option *ngFor="let jefe of jefes" [value]="jefe.Id">
+                      {{ jefe.Nombre }} {{ jefe.Paterno }} {{ jefe.Materno }}
+                    </option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <table style="border: 0">
+                  <tr style="border: 0" *ngFor="let d of item.Listadocente">
+                    <td style="border: 0">
+                      <input type="checkbox" [(ngModel)]="d.Seleccionado"   [disabled]="saving"  (ngModelChange)="SaveSeleccionado(d,item)"/>
+                    </td>
+                    <td style="border: 0">{{ d.Orden }}</td>
+                    <td style="border: 0">{{ d.Nombre }}</td>
+                    <td style="border: 0">{{ d.Area }}</td>
+                  </tr>
+                </table>
+                <span style="font-size: 10px"
+                  ><a (click)="addDocente(item)">Agregar +</a></span
+                >
+              </td>
+              <td>
+                <button
+                class="button is-success is-link is-outlined"
+                (click)="changeJefe(item)"
+                [disabled]="saving"
+              >
+              <i class="fas fa-edit"></i>
+              </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table 
+        style="font-size: 12px;position: fixed; top: 0; left: 0px; z-index: -9999;
+        color: white; 
+        border-color: white;" 
+        id="excel-table">
+          <thead>
+            <tr>
+              <th>Nro</th>
+              <th>Carreras</th>
+              <th>Equ.</th>
+              <th>Materia</th>
+              <th>Turno</th>
+              <th>A.P.</th>
+              <th>Cupo</th>
+              <th>Jefe Carrera</th>
+              <th>Docente</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of reporte; let i = index">
+              <td>{{item.Num}}</td>
+              <td>
+                {{item.Carrera}}
+              </td>
+              <td>
+                <span *ngIf="item.Equivalente == 'POR COMPETENCIAS'">MEC</span
+                ><span *ngIf="item.Equivalente == 'POR OBJETIVO'">OBJ</span>
+              </td>
+              <td>{{ item.Materia }}</td>
+              <td>
+                <span *ngIf="item.Idturno==1">Mañana</span>
+                <span *ngIf="item.Idturno==2">Tarde</span>
+                <span *ngIf="item.Idturno==3">Noche</span>
+                <span *ngIf="item.Idturno==4">Medio día</span>
+              </td>
+              <td>{{ item.Alumnosproyectados }}</td>
+              <td>
+                {{item.Cupo}}
+              </td>
+              <td>
+                {{item.JefeCarrera}}
+              </td>
+              <td>
+                {{item.Docente}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </article>
+</div>
+
+<div class="modal" [ngClass]="{ 'is-active': showDocentes }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Agregar Docente</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showDocentes = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      <app-loader *ngIf="loading"></app-loader>
+      <nav class="panel" *ngIf="!loading">
+        <div class="panel-block">
+          <!--<p class="control has-icons-left">
+            <input class="input" type="text" placeholder="Buscar por nombre" />
+            <span class="icon is-left">
+              <i class="fas fa-search" aria-hidden="true"></i>
+            </span>
+          </p>-->
+        </div>
+        <label class="panel-block" *ngFor="let item of docentes">
+          <input
+            type="checkbox"
+            [(ngModel)]="item.check"
+            (click)="changeDocente(item)"
+          />
+          <span *ngIf="item.Orden > 0">{{ item.Orden }}</span
+          >&nbsp; {{ item.Nombre }}
+        </label>
+      </nav>
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-success is-link is-outlined"
+        (click)="saveListDocente()"
+        [disabled]="saving"
+      >
+        <span *ngIf="!saving"> Guardar </span>
+        <span *ngIf="saving"> Guardando...</span>
+      </button>
+      <button
+        class="button is-danger is-link is-outlined"
+        (click)="showDocentes = false"
+      >
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cerrar</span>
+      </button>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" [ngClass]="{ 'is-active': showCarreras }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Agregar Carrera</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showCarreras = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      <app-loader *ngIf="loading"></app-loader>
+      <nav class="panel" *ngIf="!loading">
+        <div class="panel-block">
+          <!--<p class="control has-icons-left">
+            <input class="input" type="text" placeholder="Buscar por nombre" />
+            <span class="icon is-left">
+              <i class="fas fa-search" aria-hidden="true"></i>
+            </span>
+          </p>-->
+        </div>
+        <label class="panel-block" *ngFor="let item of carreras">
+          <input type="checkbox" [(ngModel)]="item.check" />
+          {{ item.Nombre }}
+        </label>
+      </nav>
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-success is-link is-outlined"
+        (click)="saveListCarrera()"
+        [disabled]="saving"
+      >
+        <span *ngIf="!saving"> Guardar </span>
+        <span *ngIf="saving"> Guardando...</span>
+      </button>
+      <button
+        class="button is-danger is-link is-outlined"
+        (click)="showCarreras = false"
+      >
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cerrar</span>
+      </button>
+    </footer>
+  </div>
+</div>

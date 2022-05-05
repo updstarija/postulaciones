@@ -1,0 +1,317 @@
+<!--Home Admin-->
+<div *ngIf="user.Idrol == 1">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <img src="/Postulaciones/assets/images/logo-azul.png" width="112" height="28" />
+      </a>
+
+      <a
+        role="button"
+        class="navbar-burger"
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="navbarBasicExample"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" [routerLink]="'/principal/administrador'"
+          ><i class="fas fa-home"></i>&nbsp; Inicio
+        </a>
+
+        <a class="navbar-item" [routerLink]="'/principal/usuarios'">
+          <i class="fas fa-list-alt"></i>&nbsp; Usuarios
+        </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            <i class="fas fa-id-card"></i>&nbsp; Postulaciones
+          </a>
+          <div class="navbar-dropdown">
+            <a
+              class="navbar-item"
+              [routerLink]="'/principal/gestionar-postulaciones'"
+              >Gestionar
+            </a>
+            <a
+              class="navbar-item"
+              [routerLink]="'/principal/gestionar-aplicaciones'"
+              >Aplicaciones</a
+            >
+            <a
+              class="navbar-item"
+              [routerLink]="'/principal/seguimiento-aplicaciones'"
+              >Seguimiento</a
+            >
+          </div>
+        </div>
+
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            <img src="/Postulaciones/assets/images/perfil.jpg" class="img-perfil" />
+            {{ user.Nomusu }}
+          </a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item" [routerLink]="'/principal/perfil'">
+              Perfil
+            </a>
+            <hr class="navbar-divider" />
+            <a
+              class="navbar-item"
+              data-target="modal"
+              aria-haspopup="true"
+              (click)="showLogout = true"
+            >
+              Cerrar Sesión
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+<!--Home Docente-->
+<div *ngIf="user.Idrol == 2">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <img src="/Postulaciones/assets/images/logo-azul.png" width="112" height="28" />
+      </a>
+
+      <a
+        role="button"
+        class="navbar-burger"
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="navbarBasicExample"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" [routerLink]="'/principal/docente'"
+          ><i class="fas fa-home"></i>&nbsp; Inicio
+        </a>
+
+        <a class="navbar-item" [routerLink]="'/principal/mis-postulaciones'">
+          <i class="fas fa-list-alt"></i>&nbsp;Mis Postulaciónes
+        </a>
+        <a class="navbar-item" [routerLink]="'/principal/mi-curriculum'"
+          ><i class="fas fa-id-card"></i>&nbsp; Curriculum
+        </a>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            <img src="/Postulaciones/assets/images/perfil.jpg" class="img-perfil" />
+            {{ user.Nomusu }}
+          </a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item" [routerLink]="'/principal/perfil'">
+              Perfil
+            </a>
+            <hr class="navbar-divider" />
+            <a
+              class="navbar-item"
+              data-target="modal"
+              aria-haspopup="true"
+              (click)="showLogout = true"
+            >
+              Cerrar Sesión
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+<!--Home Talento Humano-->
+<div *ngIf="user.Idrol == 3">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <img src="/Postulaciones/assets/images/logo-azul.png" width="112" height="28" />
+      </a>
+
+      <a
+        role="button"
+        class="navbar-burger"
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="navbarBasicExample"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" [routerLink]="'/principal/talento-humano'"
+          ><i class="fas fa-home"></i>&nbsp; Inicio
+        </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            <i class="fas fa-id-card"></i>&nbsp; Postulaciones
+          </a>
+          <div class="navbar-dropdown">
+            <a
+              class="navbar-item"
+              [routerLink]="'/principal/gestionar-postulaciones'"
+              >Gestionar
+            </a>
+            <a
+              class="navbar-item"
+              [routerLink]="'/principal/gestionar-aplicaciones'"
+              >Aplicaciones</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            <img src="/Postulaciones/assets/images/perfil.jpg" class="img-perfil" />
+            {{ user.Nomusu }}
+          </a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item" [routerLink]="'/principal/perfil'">
+              Perfil
+            </a>
+            <hr class="navbar-divider" />
+            <a
+              class="navbar-item"
+              data-target="modal"
+              aria-haspopup="true"
+              (click)="showLogout = true"
+            >
+              Cerrar Sesión
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+<!--Home Jefe de Carrera-->
+<div *ngIf="user.Idrol == 4">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <img src="/Postulaciones/assets/images/logo-azul.png" width="112" height="28" />
+      </a>
+
+      <a
+        role="button"
+        class="navbar-burger"
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="navbarBasicExample"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" [routerLink]="'/principal/jefe-carrera'"
+          ><i class="fas fa-home"></i>&nbsp; Inicio
+        </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            <i class="fas fa-id-card"></i>&nbsp; Postulaciones
+          </a>
+          <div class="navbar-dropdown">
+            <a
+              class="navbar-item"
+              [routerLink]="'/principal/gestionar-postulaciones'"
+              >Gestionar
+            </a>
+            <a
+              class="navbar-item"
+              [routerLink]="'/principal/seguimiento-aplicaciones'"
+              >Seguimiento</a
+            >
+          </div>
+         
+        </div>
+        <a class="navbar-item" [routerLink]="'/principal/terna'"
+        ><i class="fas fa-address-book"></i>&nbsp; Terna
+      </a>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            <img src="/Postulaciones/assets/images/perfil.jpg" class="img-perfil" />
+            {{ user.Nomusu }}
+          </a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item" [routerLink]="'/principal/perfil'">
+              Perfil
+            </a>
+            <hr class="navbar-divider" />
+            <a
+              class="navbar-item"
+              data-target="modal"
+              aria-haspopup="true"
+              (click)="showLogout = true"
+            >
+              Cerrar Sesión
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+<div class="modal" [ngClass]="{ 'is-active': showLogout }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Cerrar Sesión</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showLogout = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      <!-- Content ... -->
+      <p>Esta Seguro que desea cerrar sesión?</p>
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-danger"
+        [disabled]="loading_logout"
+        (click)="logout()"
+      >
+        <span *ngIf="!loading_logout">Cerrar Sesión</span>
+        <span *ngIf="loading_logout">Desconectando...</span>
+      </button>
+      <button class="button" (click)="showLogout = false">Cancelar</button>
+    </footer>
+  </div>
+</div>
+<router-outlet></router-outlet>

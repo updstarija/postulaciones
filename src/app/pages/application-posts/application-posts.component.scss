@@ -1,0 +1,21 @@
+.celda {
+  width: 200px;
+
+  /* BOTH of the following are required for text-overflow */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.modal-card-body {
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+}
+
+.modal-card-body {
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}

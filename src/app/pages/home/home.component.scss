@@ -1,0 +1,348 @@
+@mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.play {
+  position: relative;
+  z-index: 1;
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  background-color: #f0f3fa;
+  box-shadow: 0 0 34px rgba(0, 0, 0, 0.08);
+  border: 25px solid #fff;
+  margin: auto;
+  @include vertical-align();
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 0 34px rgba(0, 0, 0, 0.15);
+  }
+  span {
+    display: block;
+    border-style: solid;
+    box-sizing: border-box;
+    width: 20px;
+    height: 30px;
+    border-width: 15px 0px 15px 20px;
+    margin: 20px auto;
+    border-color: transparent transparent transparent #258dab;
+  }
+}
+
+.title {
+  margin: 4rem 0;
+}
+
+.hero {
+  // background-image: url(/assets/images/banner.jpg);
+  // background-size: 61.5% auto;
+  // background-repeat: no-repeat;
+  // background-position: top right;
+  .hero-body {
+    padding: 0;
+  }
+}
+
+.button.shop {
+  background-color: #fac84f;
+  border: none;
+  outline: none;
+  // border: 1px solid #e6ae2e;
+  box-shadow: none !important;
+}
+
+.button.shop-mobile {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 10;
+  border: none;
+  outline: none;
+  background: #fac84f;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+  transform: translate3d(0, 60px, 0);
+  transition: transform 0.5s ease;
+  &.show {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.sonovia {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+}
+
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: transparent;
+  transition: all 0.3s ease-in;
+  .logo {
+    height: 100px;
+    max-height: none;
+    transition: height 0.3s ease-in;
+  }
+  .navbar-item {
+    color: #fff;
+    font-weight: bold;
+    transition: color 0.3s ease-in;
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  &.navbar-scrolled {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.068);
+    .logo {
+      height: 64px;
+    }
+    .navbar-item {
+      color: #258dab;
+    }
+    .navbar-burger {
+      color: #4b4b4b;
+    }
+  }
+  .cart {
+    margin-left: auto;
+  }
+  .navbar-burger {
+    color: #ffffff;
+    height: 86px;
+    margin-left: 0;
+    span {
+      height: 3px;
+    }
+  }
+}
+
+.banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  max-height: 100%;
+  z-index: 0;
+  width: calc(50% + 160px);
+}
+
+.card {
+  min-height: 240px;
+  border-radius: 10px;
+  .subtitle {
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-top: 20px;
+  }
+  .media {
+    margin-bottom: 10px;
+  }
+}
+
+.sonomask {
+  @include vertical-align();
+  display: block;
+  margin: auto;
+}
+
+svg.diagonal-top {
+  display: block;
+  width: 100%;
+  height: 50px;
+  background: #ffffff;
+  polygon {
+    fill: #0d4890;
+  }
+}
+
+.hero.banner-background {
+  margin-top: 4rem;
+  .title {
+    color: #000;
+  }
+  .subtitle {
+    color: rgb(70, 70, 70);
+  }
+  .hero-body {
+    background-image: url(/Postulaciones/assets/images/background-banner.jpg);
+    background-position: center;
+    background-size: cover;
+  }
+  .card {
+    background-color: #258dab;
+    margin-bottom: 2rem;
+    color: #fff;
+    font-style: italic;
+    .title {
+      font-weight: 900;
+      margin: 1rem;
+      display: block;
+      color: #ff6f6f;
+      font-style: normal;
+    }
+    .quotes {
+      font-size: 8rem;
+      height: 18px;
+      position: absolute;
+      margin: 0;
+      width: 100%;
+      text-align: center;
+      color: #ff6f6f;
+      left: 0;
+      line-height: 5rem;
+      font-style: normal;
+    }
+  }
+}
+
+.vertical-center {
+  margin-top: 180px;
+}
+
+.hero.is-fullheight {
+  height: 100vh;
+  max-height: 728px;
+  min-height: auto;
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  .navbar {
+    .logo {
+      height: 84px;
+    }
+    .navbar-item {
+      color: #258dab;
+      .gg-shopping-cart {
+        color: #ffffff;
+      }
+    }
+    &.navbar-scrolled {
+      .navbar-item {
+        .gg-shopping-cart {
+          color: #258dab;
+        }
+      }
+    }
+  }
+  .banner {
+    width: auto;
+    max-height: 62%;
+    max-width: calc(50% + 90px);
+  }
+  .play {
+    top: 240px;
+  }
+  .hero.is-fullheight {
+    height: 100vh;
+    max-height: 570px;
+    min-height: auto;
+    h2.title {
+      max-width: 37%;
+      text-align: left;
+    }
+    .subtitle {
+      max-width: 50%;
+    }
+    .hero-body {
+      align-items: flex-end;
+    }
+  }
+}
+
+@media only screen and (min-width: 481px) and (max-width: 600px) {
+  .navbar {
+    .logo {
+      height: 64px;
+    }
+    .navbar-item {
+      color: #258dab;
+    }
+  }
+  .banner {
+    width: 63%;
+  }
+  .play {
+    top: 200px;
+  }
+  .hero.is-fullheight {
+    height: 100vh;
+    max-height: 600px;
+    min-height: auto;
+    .hero-body {
+      align-items: flex-end;
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  /* CSS rules here */
+  .hero.is-fullheight {
+    height: auto;
+    max-height: auto;
+    min-height: auto;
+  }
+  .navbar {
+    .logo {
+      height: 70px;
+      border-radius: 4px;
+    }
+    .navbar-item {
+      color: #258dab;
+      &.cart {
+        color: #fff;
+      }
+    }
+    &.navbar-scrolled {
+      .logo {
+        height: 50px;
+      }
+      .navbar-burger {
+        height: 4rem;
+      }
+      .cart {
+        color: #258dab;
+      }
+    }
+  }
+  .button.is-medium {
+    font-size: 1rem;
+  }
+  .title.is-margin-top {
+    margin: 100% 0 2rem 0;
+    font-size: 1.8rem;
+    font-weight: 900;
+  }
+  .container {
+    margin: 0;
+    padding: 0;
+    .columns {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  .banner {
+    width: 100%;
+  }
+  .play {
+    z-index: 2;
+    position: absolute;
+    margin-top: 61%;
+    top: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+  .title {
+    margin: 2rem 0;
+  }
+  .vertical-center {
+    margin-top: 1rem;
+  }
+}

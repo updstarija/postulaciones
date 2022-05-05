@@ -1,0 +1,10 @@
+<!--<a class="item" [routerLink]="[ '/item', item.id_producto, item.talla, item.cantidad ]">-->
+<a class="item">
+  <!--<img [src]="item.imagen" [alt]="item.nombre">-->
+  <p class="title is-5">{{ item.Descripcion }}</p>
+  <div>
+    <span *ngFor="let mat of item.DetalleMateria"> {{ mat.Nombre }}</span
+    ><br />
+  </div>
+  <button class="button is-primary">Postular Ahora</button>
+</a>

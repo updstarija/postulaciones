@@ -1,0 +1,45 @@
+.item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  outline: none;
+  display: block;
+  width: calc(100% - 10px);
+  margin: 0 5px;
+  &:hover {
+    opacity: 0.8;
+  }
+  .button {
+    width: 100%;
+  }
+  .precios {
+    margin-bottom: 10px;
+    .precio {
+      color: #258dab;
+      font-weight: bolder;
+      font-size: 1.6rem;
+    }
+    .precio-tachado {
+      color: #747474;
+      text-decoration: line-through;
+    }
+  }
+}
+
+@media only screen and (max-width: 520px) {
+  .item {
+    padding: 10px;
+    .title {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .precios {
+      .precio {
+        font-size: 1.3rem;
+      }
+      .precio-tachado {
+        font-size: 1rem;
+      }
+    }
+  }
+}

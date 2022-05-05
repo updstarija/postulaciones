@@ -1,0 +1,59 @@
+<section class="hero banner">
+  <div class="hero-body">
+    <p class="title text-white">Detalle postulacion</p>
+    <p class="subtitle text-gray">Lista de materias en postulacion</p>
+  </div>
+</section>
+<div class="container mt-5">
+  <!-- <aside class="menu">
+        <ul class="menu-list">
+          <li>
+            <a class="is-active">{{postulacion.Descripcion}}</a>
+            <ul >
+              <li class="m-2" *ngFor="let item of postulacion.DetalleMateria">
+                <label class="checkbox">
+                    <input type="checkbox">
+                    {{item.Nombre}}
+                  </label></li>
+            </ul>
+          </li>
+        </ul>
+      </aside> -->
+  <article class="panel is-primary is-uppercase">
+    <p class="panel-heading">
+      {{ postulacion?.Descripcion }}
+    </p>
+    <label class="panel-block" *ngFor="let item of postulacion?.DetalleMateria">
+      <input
+        type="checkbox"
+        [checked]="item.Check"
+        (change)="item.Check = !item.Check"
+        [disabled]="item.Idpostulacionmateria > 0"
+      />
+      {{ item?.Nombre }}
+    </label>
+    <!-- <a class="panel-block m-2" *ngFor="let item of postulacion.DetalleMateria">
+           
+          <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+          </span>
+          {{item.Nombre}}
+          <label class="is-right is-justify-content-right"><input type="checkbox"></label>    
+        </a>  -->
+    <div class="panel-block">
+      <button
+        class="button is-link is-outlined is-fullwidth"
+        (click)="Save()"
+        [disabled]="!showButton"
+      >
+        POSTULAR
+      </button>
+    </div>
+  </article>
+  <article class="message is-warning" *ngIf="!showButton">
+    <div class="message-body">
+      Usted ya postulo a todas la materias disponibles, verifique el estado en
+      "Mis Postulaciones".
+    </div>
+  </article>
+</div>

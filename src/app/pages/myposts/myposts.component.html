@@ -1,0 +1,43 @@
+<section class="hero banner">
+    <div class="hero-body">
+      <p class="title text-white">Mis Postulaciones</p>
+      <p class="subtitle text-gray">Listado de materias en las que encuentro postulando</p>
+    </div>
+</section>
+<div class="container mt-3">
+    <aside class="menu">
+      <ul class="menu-list">
+        <li *ngFor="let item of postulaciones">
+          <a class="is-active" >{{item.Descripcion}}</a>
+          <ul *ngFor="let itemM of item.DetalleMateria">
+            <li *ngIf="itemM.EstadoPostulacionMateria==1">
+              <div class="columns">
+              <div class="column is-11">
+                <a > {{itemM.Nombre}} </a>
+              </div>
+              <div class="column is-1"><span class="tag is-info">Pendiente</span> </div> 
+            </div>
+          </li>
+          <li *ngIf="itemM.EstadoPostulacionMateria==2">
+            <div class="columns">
+            <div class="column is-11">
+              <a > {{itemM.Nombre}} </a>
+            </div>
+            <div class="column is-1"><span class="tag is-success">Aprobado</span> </div> 
+          </div>
+          <li *ngIf="itemM.EstadoPostulacionMateria==3">
+            <div class="columns">
+            <div class="column is-11">
+              <a > {{itemM.Nombre}} </a>
+            </div>
+            <div class="column is-1"><span class="tag is-danger">Rechazado</span> </div> 
+          </div>
+        </li>
+          
+          <!-- <li><a *ngIf="itemM.EstadoPostulacionMateria==2">{{itemM.Nombre}} <span class="tag is-success">Aprobado</span></a></li> -->
+          </ul>
+        </li>
+      </ul>
+      </aside>
+</div>
+

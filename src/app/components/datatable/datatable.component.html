@@ -1,0 +1,270 @@
+<div class="container mt-1">
+  <article class="panel is-primary">
+    <p class="panel-heading mb-5">
+      Postulaciones
+    </p>
+    <div class="columns pr-2 pl-2">
+         
+      <div class="field column is-4">
+        <label class="label">Fecha Inicio</label>
+        <input class="input" type="date"  [(ngModel)]="Fechainicio" />
+      </div>
+      <div class="field column is-4">
+        <label 
+          class="label"
+          
+        >Fecha Fin</label>
+        <input class="input" type="date" [(ngModel)]="Fechafin"/>
+      </div>
+      <div class="field column is-4">
+        <label class="label">Estado</label>
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <div class="select is-fullwidth">
+              <select [(ngModel)]="Estado">
+                <option value="Vigente">Vigente</option>
+                <option value="No Vigente">No Vigente</option>
+              </select>
+            </div>
+          </div>
+          <div class="control">
+            <button type="submit" class="button is-primary" (click)="UpdateTable()">Listar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table is-striped row-border hove">
+      <thead>
+        <tr>
+          <th>Nro</th>
+          <th>Descripcion</th>
+          <th>Fechaini</th>
+          <th>Fechafin</th>
+          <th>Materias</th>
+          <th class="has-text-centered boton">
+            <button class="button is-primary is-small is-light" data-target="modal" (click)="Nuevo()">
+            <span>Nuevo</span>
+            <span class="icon is-small">
+              <i class="fas fa-plus-circle"></i>
+            </span>
+          </button></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of postulaciones;let i=index">
+          <td>{{i+1}}</td>
+          <td>{{item.Descripcion}}</td>
+          <td>
+            {{item.Fechaini | date:'dd/MM/y'}}
+          </td>
+          <td>{{item.Fechafin | date:'dd/MM/y'}}</td>
+          <td  >
+            <div class="celda">
+              <span  *ngFor="let itemM of item.DetalleMateria">
+              
+                {{itemM.Nombre}},
+              </span>
+            </div>
+            
+          </td>
+          <td>
+            <button class="button is-text is-small has-text-primary" (click)="Edit(item)"><i class="fas fa-pencil-alt"></i></button>
+            <button class="button is-text is-small has-text-primary" (click)="Confirm(item)"><i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+  
+      </tbody>
+    </table>
+  </article>
+
+  <div class="modal" [ngClass]="{ 'is-active': showModal }">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <form [formGroup]="formData">
+      <header class="modal-card-head has-background-primary">
+        <p class="modal-card-title has-text-light">Registro de Postulación</p>
+        <button
+          class="delete"
+          aria-label="close"
+          (click)="showModal = false"
+        ></button>
+      </header>
+      <section class="modal-card-body">
+        
+        <label class="label">* Descripcion</label>
+        <div class="field">
+          <p class="control has-icons-left has-icons-right">
+            <input
+             formControlName="Descripcion"
+              class="input"
+              type="text"
+              placeholder="Descripcion"
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </p>
+        </div>
+        <div class="columns">
+         
+          <div class="field column is-6">
+            <label class="label">* Fecha Inicio</label>
+            <input class="input" type="date" formControlName="Fechaini"/>
+          </div>
+          <div class="field column is-6">
+            <label class="label">* Fecha Fin</label>
+            <input class="input" type="date" formControlName="Fechafin"/>
+          </div>
+        </div>
+        <!-- <label class="label">Ragos</label>
+        <div class="field columns is-justify-content-center">
+          <input class="input column is-6 mr-5" type="date"/>
+          <input class="input column is-5" type="date"/>
+        </div> -->
+        <label class="label">* Facultad</label>
+        <div class="field">
+          <div class="select is-fullwidth">
+            <select *ngIf="usuario.Idrol==4" formControlName="Idfacultad" disabled>
+              <option *ngFor="let itemF of facultades" [value]="itemF.Id" [selected]="itemF.Id"  >{{itemF.Nombre}}</option>
+            </select>
+            <select *ngIf="usuario.Idrol!=4" formControlName="Idfacultad">
+              <option *ngFor="let itemF of facultades" [value]="itemF.Id" [selected]="itemF.Id"  >{{itemF.Nombre}}</option>
+            </select>
+          </div>
+        </div>
+        <label class="label">* Materia</label>
+        <div class="field">
+          
+          <p class="control has-icons-left has-icons-right">
+            <input
+              class="input"
+              type="text"
+              placeholder="Buscar Materia..."
+              formControlName="Buscar"
+            />
+            <span class="icon is-small is-left">
+               <i class="fa fa-search" aria-hidden="true"></i>
+            </span>
+          </p>
+          <aside class="menu" *ngIf="showMenu" >
+            <ul class="menu-list is-uppercase" *ngFor="let item of materias">
+              <li><a  (click)="AddMateria(item)">{{item.Nombre}} - {{item.Sigla}}</a></li>
+            </ul>
+          </aside>
+          <table class="table is-fullwidth" *ngIf="showTabla">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="tMaterias">
+                <tr *ngFor="let item of Listamaterias;let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{item.Nombre}}</td>
+                  <td>
+                    <button class="button is-text is-small has-text-primary" (click)="DeleteMateria(item)"><i class="fas fa-times"></i></button>
+                  </td>
+                </tr>
+            </tbody>
+        </table>
+  
+        </div>
+        <small>* Campos Obligatorios</small>
+      </section>
+      <footer class="modal-card-foot is-align-self-flex-end">
+        <button
+        class="button is-link is-outlined m-1"
+        [disabled]="!formData.valid || saving"
+        (click)="Save()"
+      >
+      <span class="icon is-small">
+        <i class="far fa-save"></i>
+      </span>
+        <span *ngIf="!saving"> Guardar</span>
+        <span *ngIf="saving"> Guardando...</span>
+      </button>
+
+        <!-- <button class="button is-success" [disabled]="loading">
+          <span class="icon is-small">
+            <i class="far fa-save"></i>
+          </span>
+          <span *ngIf="!loading">Guardar</span>
+          <span *ngIf="loading">Cargando...</span>
+        </button> -->
+
+
+        <button class="button is-danger is-link is-outlined " (click)="Cancel()">
+          <span class="icon is-small">
+            <i class="fas fa-ban"></i>
+          </span>
+          <span>Cancelar</span>
+          
+        </button>
+      </footer>
+    </form>
+    </div>
+  </div>
+
+  <!-- <div class="modal" [ngClass]="{ 'is-active': showConfirm }">
+    <div class="modal-background"></div>
+    <div class="modal-content has-text-centered">
+      <div class="box">
+        <div>
+
+        </div>
+         <p>
+            <strong>¿Esta seguro que desea eliminar la postulación?</strong> 
+           
+        </p>
+        <br>
+        <a aria-label="like">
+          <span class="icon is-small">
+            <i class="far fa-check-circle fa-2x"></i>
+        </span>
+      </a>
+      <a aria-label="like">
+        <span class="icon is-small">
+          <i class="fas fa-ban fa-2x"></i>
+      </span>
+    </a>
+      </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div> -->
+  <div class="modal" [ngClass]="{ 'is-active': showConfirm }">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="box">
+        <article class="media">
+          <div class="media-content">
+            <div class="content has-text-centered">
+              <p>
+               <strong>¿Estas seguro de desea eliminar la postulación?</strong> 
+              </p>
+            </div>
+            <div class="level has-text-centered">
+              <a class="level-item" aria-label="retweet" (click)="Delete()">
+                  <span class="icon">
+                    <i class="far fa-check-circle fa-lg"></i>
+                  </span>
+               </a>
+              <a class="level-item" aria-label="like" (click)="showConfirm=false">
+                  <span class="icon has-text-danger">
+                    <i class="fas fa-ban fa-lg"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div>
+  
+</div>
+
+
+

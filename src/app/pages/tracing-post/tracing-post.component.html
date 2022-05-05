@@ -1,0 +1,468 @@
+<div class="container mt-1">
+  <article class="panel is-primary">
+    <p class="panel-heading mb-5">Seguimiento de Postulaciones</p>
+    <div class="columns is-vcentered is-marginless">
+      <div class="column is-4">
+        <div class="field">
+          <label class="label"> Fecha de Inicio</label>
+          <div class="control is-small">
+            <input
+              [(ngModel)]="Fechainicio"
+              class="input"
+              type="date"
+              placeholder="Ingresa fecha de inicio"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="column is-4">
+        <div class="field">
+          <label class="label"> Fecha de fin</label>
+          <div class="control is-small">
+            <input
+              [(ngModel)]="Fechafin"
+              class="input"
+              type="date"
+              placeholder="Ingresa fecha de fin"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="column is-2">
+        <div class="field">
+          <label class="label">Estado</label>
+          <div class="select is-fullwidth">
+            <select [(ngModel)]="Estado">
+              <option value="Pendiente">Pendiente</option>
+              <option value="Aprobado">Aprobado</option>
+              <option value="Reprobado">Reprobado</option>
+              <option value="Observado">Observado</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="column is-2">
+        <div class="field">
+          <label class="label">&nbsp;</label>
+          <button
+            class="button is-primary"
+            aria-label="like"
+            (click)="UpdateTable()"
+            [disabled]="loading"
+            [ngClass]="{ 'is-loading': loading }"
+          >
+            Listar
+          </button>
+        </div>
+      </div>
+    </div>
+    <table
+      datatable
+      [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger"
+      class="table is-striped row-border hove"
+    >
+      <thead>
+        <tr>
+          <th>Nro</th>
+          <th>Materia</th>
+          <th>Docente</th>
+          <th>N.C.</th>
+          <th>Fec. Ent.</th>
+          <th>Fec. Hab</th>
+          <th>N.A.</th>
+          <th>N.T.</th>
+          <th class="has-text-centered boton"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of postulaciones; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.Materia }}</td>
+          <td>{{ item.Docente }}</td>
+          <td>{{ item.Notacv }}</td>
+          <td>
+            <span *ngIf="item.Fechaentrevista == '0001-01-01T00:00:00'"
+              >Sin Fecha</span
+            ><span *ngIf="item.Fechaentrevista != '0001-01-01T00:00:00'">{{
+              item.Fechaentrevista | date: "dd/MM/yyyy h:mm:ss"
+            }}</span>
+          </td>
+          <td>
+            <span *ngIf="item.Fechahabilitacion == '0001-01-01T00:00:00'"
+              >Sin Fecha</span
+            ><span *ngIf="item.Fechahabilitacion != '0001-01-01T00:00:00'">{{
+              item.Fechahabilitacion | date: "dd/MM/yyyy h:mm:ss"
+            }}</span>
+          </td>
+          <td>
+            {{ item.Notaacademica }}
+          </td>
+          <td>
+            {{ item.Notatecnica }}
+          </td>
+          <td>
+            <div class="dropdown is-hoverable">
+              <div class="dropdown-trigger">
+                <button
+                  class="button"
+                  aria-haspopup="true"
+                  aria-controls="dropdown-menu3"
+                >
+                  <span>Más</span>
+                  <span class="icon is-small">
+                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+                <div class="dropdown-content">
+                  <a
+                    *ngIf="
+                      item.Fechaentrevista == '0001-01-01T00:00:00' &&
+                      item.Estado == 1
+                    "
+                    (click)="preProgramarEntrevista(item)"
+                    class="dropdown-item"
+                  >
+                    Programar Entrevista
+                  </a>
+                  <a
+                    *ngIf="
+                      item.Fechaentrevista != '0001-01-01T00:00:00' ||
+                      item.Estado > 1
+                    "
+                    class="dropdown-item isDisabled"
+                  >
+                    Programar Entrevista
+                  </a>
+                  <a
+                    class="dropdown-item"
+                    *ngIf="
+                      item.Fechahabilitacion == '0001-01-01T00:00:00' &&
+                      item.Estado == 1
+                    "
+                    (click)="preProgramarHabilitacion(item)"
+                  >
+                    Programar Habilitación
+                  </a>
+                  <a
+                    class="dropdown-item isDisabled"
+                    *ngIf="
+                      item.Fechahabilitacion != '0001-01-01T00:00:00' ||
+                      item.Estado > 1
+                    "
+                  >
+                    Programar Habilitación
+                  </a>
+                  <hr class="dropdown-divider" />
+                  <a
+                    *ngIf="
+                      !item.Notaacademica &&
+                      !item.Notatecnica &&
+                      item.Fechahabilitacion != '0001-01-01T00:00:00' &&
+                      item.Fechaentrevista != '0001-01-01T00:00:00' &&
+                      item.Estado == 1
+                    "
+                    class="dropdown-item"
+                    (click)="preevaluarHabilitacion(item)"
+                  >
+                    Evaluar Docente
+                  </a>
+                  <a
+                    *ngIf="
+                      (item.Notaacademica && item.Notatecnica) ||
+                      item.Fechahabilitacion == '0001-01-01T00:00:00' ||
+                      item.Fechaentrevista == '0001-01-01T00:00:00' ||
+                      item.Estado > 1
+                    "
+                    class="dropdown-item isDisabled"
+                  >
+                    Evaluar Docente
+                  </a>
+                  <a
+                    (click)="preObservar(item)"
+                    class="dropdown-item"
+                    *ngIf="item.Estado == 1"
+                  >
+                    Observar
+                  </a>
+                  <a class="dropdown-item isDisabled" *ngIf="item.Estado > 1">
+                    Observar
+                  </a>
+                  <a
+                    (click)="verDetalle(item)"
+                    class="dropdown-item"
+                    *ngIf="item.Estado == 4"
+                  >
+                    Detalle Observación
+                  </a>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+</div>
+
+<div class="modal" [ngClass]="{ 'is-active': showProgramarEntrevista }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Programar Entrevista</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showProgramarEntrevista = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <label class="label">* Fecha de Entrevista</label>
+        <div class="control is-small">
+          <input
+            [(ngModel)]="Fechaentrevista"
+            class="input"
+            type="datetime-local"
+            placeholder="Ingresa fecha de entrevista"
+          />
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-success is-link is-outlined"
+        [disabled]="!Fechaentrevista || saving"
+        (click)="programarEntrevista()"
+      >
+        <span *ngIf="!saving"> Guardar </span>
+        <span *ngIf="saving"> Guardando...</span>
+      </button>
+      <button
+        class="button is-danger is-link is-outlined"
+        (click)="showProgramarEntrevista = false"
+      >
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cerrar</span>
+      </button>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" [ngClass]="{ 'is-active': showProgramarHabilitacion }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Programar Habilitación</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showProgramarHabilitacion = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <label class="label">* Fecha de Habilitación</label>
+        <div class="control is-small">
+          <input
+            [(ngModel)]="Fechahabilitacion"
+            class="input"
+            type="datetime-local"
+            placeholder="Ingresa fecha de habilitacion"
+          />
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-success is-link is-outlined"
+        [disabled]="!Fechahabilitacion || saving"
+        (click)="programarHabilitacion()"
+      >
+        <span *ngIf="!saving"> Guardar </span>
+        <span *ngIf="saving"> Guardando...</span>
+      </button>
+      <button
+        class="button is-danger is-link is-outlined"
+        (click)="showProgramarHabilitacion = false"
+      >
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cerrar</span>
+      </button>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" [ngClass]="{ 'is-active': showEvaluar }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Evaluar Habilitación</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showEvaluar = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <label class="label">* Nota Academica</label>
+        <div class="control is-small">
+          <input
+            [(ngModel)]="Notaacademica"
+            class="input"
+            type="number"
+            placeholder="Ingresa la nota academica"
+            min="0"
+            max="100"
+          />
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">* Nota Tecnica</label>
+        <div class="control is-small">
+          <input
+            [(ngModel)]="Notatecnica"
+            class="input"
+            type="number"
+            placeholder="Ingresa la nota tecnica"
+            min="0"
+            max="100"
+          />
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-success is-link is-outlined"
+        [disabled]="!Notaacademica || !Notatecnica || saving"
+        (click)="evaluarHabilitacion()"
+      >
+        <span *ngIf="!saving"> Guardar </span>
+        <span *ngIf="saving"> Guardando...</span>
+      </button>
+      <button
+        class="button is-danger is-link is-outlined"
+        (click)="showEvaluar = false"
+      >
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cerrar</span>
+      </button>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" [ngClass]="{ 'is-active': showObservar }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Observar Postulación</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showObservar = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <label class="label">* Tipo</label>
+        <div class="select is-fullwidth">
+          <select [(ngModel)]="tipoObservacion">
+            <option value="Inasistencia">Inasistencia</option>
+            <option value="Reprobado">Reprobado</option>
+            <option value="Otros">Otros</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">* Observación</label>
+        <div class="control is-small">
+          <textarea
+            [(ngModel)]="observacion"
+            class="textarea"
+            placeholder="Ingresa la observación"
+            rows="5"
+            max="500"
+          ></textarea>
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-success is-link is-outlined"
+        [disabled]="!tipoObservacion || !observacion || saving"
+        (click)="observar()"
+      >
+        <span *ngIf="!saving"> Guardar </span>
+        <span *ngIf="saving"> Guardando...</span>
+      </button>
+      <button
+        class="button is-danger is-link is-outlined"
+        (click)="showObservar = false"
+      >
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cerrar</span>
+      </button>
+    </footer>
+  </div>
+</div>
+
+<div class="modal" [ngClass]="{ 'is-active': showDetalleObservacion }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Observar Postulación</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showDetalleObservacion = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="field">
+        <label class="label">* Tipo</label>
+        <div class="select is-fullwidth">
+          <select [(ngModel)]="tipoObservacion" disabled>
+            <option value="Inasistencia">Inasistencia</option>
+            <option value="Reprobado">Reprobado</option>
+            <option value="Otros">Otros</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">* Observación</label>
+        <div class="control is-small">
+          <textarea
+            [(ngModel)]="observacion"
+            class="textarea"
+            placeholder="Ingresa la observación"
+            rows="5"
+            max="500"
+            disabled
+          ></textarea>
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-danger is-link is-outlined"
+        (click)="showDetalleObservacion = false"
+      >
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cerrar</span>
+      </button>
+    </footer>
+  </div>
+</div>

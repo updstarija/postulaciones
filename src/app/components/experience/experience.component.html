@@ -1,0 +1,547 @@
+<div class="container">
+  <div class="tile is-ancestor">
+    <div class="tile is-parent">
+      <article class="tile is-child notification is-primary box">
+        <p class="title">Experiencia Laboral</p>
+        <p class="subtitle">Añade datos de tu experiencia</p>
+        <div class="content">
+          <div
+            class="card mt-3"
+            *ngFor="let item of experiencias; let i = index"
+          >
+            <div class="card-content">
+              <div class="content">
+                <p class="is-size-5" style="line-height: 0.7">
+                  <strong style="text-transform: uppercase">{{
+                    item.Cargo
+                  }}</strong>
+                  <br />
+                  <span class="is-size-7"
+                    ><strong>{{ item.Empresa }}</strong>
+                  </span>
+                  <br />
+                  <br />
+                  <span class="is-size-6">{{ item.Descripcion }}</span>
+                  <br />
+                  <time class="is-size-7">
+                    <strong>Desde: &nbsp;</strong
+                    >{{ item.Fechaini | date: "dd/MM/y" }}</time
+                  >&nbsp;
+                  <time *ngIf="!item.Actual" class="is-size-7">
+                    <strong>Hasta: &nbsp;</strong
+                    ><span>{{ item.Fechafin | date: "dd/MM/y" }}</span>
+                  </time>
+                  <time *ngIf="item.Actual" class="is-size-7">
+                    <span *ngIf="item.Actual">Actualmente trabajo aquí</span>
+                  </time>
+                </p>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a class="card-footer-item" (click)="showModalEdit(i, item)"
+                ><i class="fas fa-edit"></i
+              ></a>
+              <a class="card-footer-item" (click)="showModalDelete(i, item)"
+                ><i class="fas fa-trash-alt"></i
+              ></a>
+            </footer>
+          </div>
+          <button class="button is-link float" (click)="showModalNew()">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <form [formGroup]="formDataExperienciaGlobal">
+          <div class="field">
+            <label class="subtitle">* Años de Experiencia Laboral</label>
+            <div class="control is-small">
+              <input
+                formControlName="Experiencia"
+                class="input"
+                type="number"
+                placeholder="Ingresar los años de experiencia laboral en general"
+              />
+            </div>
+          </div>
+        </form>
+      </article>
+    </div>
+    <div class="tile is-4 is-vertical is-parent">
+      <article class="tile is-child box notification is-info">
+        <p class="title">Habilidades Profesionales</p>
+        <p class="subtitle">Añade datos de tus habilidades.</p>
+        <div class="content">
+          <div
+            class="card mt-3"
+            *ngFor="let item of habilidades; let i = index"
+          >
+            <div class="card-content">
+              <div class="content">
+                <p class="is-size-7" style="line-height: 1">
+                  <strong style="text-transform: uppercase">{{
+                    item.Descripcion
+                  }}</strong>
+                  <br />
+                  <span class="is-size-7"
+                    >{{ item.Experiencia }} años de experiencia.
+                  </span>
+                </p>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a
+                class="card-footer-item"
+                (click)="showModalEditHabilidad(i, item)"
+                ><i class="fas fa-edit"></i
+              ></a>
+              <a
+                class="card-footer-item"
+                (click)="showModalDeleteHabilidad(i, item)"
+                ><i class="fas fa-trash-alt"></i
+              ></a>
+            </footer>
+          </div>
+          <button
+            class="button is-link float"
+            (click)="showModalNewHabilidad()"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </article>
+      <article class="tile is-child box notification is-info">
+        <p class="title">Contactos de Referencia</p>
+        <p class="subtitle">Añade datos de tus referencias.</p>
+        <div class="content">
+          <div
+            class="card mt-3"
+            *ngFor="let item of referencias; let i = index"
+          >
+            <div class="card-content">
+              <div class="content">
+                <p class="is-size-7" style="line-height: 1">
+                  <strong style="text-transform: uppercase">{{
+                    item.Nombre
+                  }}</strong>
+                  <br />
+                  <span class="is-size-7">{{ item.Empresa }} </span>
+                  <br />
+                  <span class="is-size-7">{{ item.Telefono }} </span>
+                </p>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a
+                class="card-footer-item"
+                (click)="showModalEditReferencia(i, item)"
+                ><i class="fas fa-edit"></i
+              ></a>
+              <a
+                class="card-footer-item"
+                (click)="showModalDeleteReferencia(i, item)"
+                ><i class="fas fa-trash-alt"></i
+              ></a>
+            </footer>
+          </div>
+          <button
+            class="button is-link float"
+            (click)="showModalNewReferencia()"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="columns is-vcentered is-marginless">
+    <div class="column is-8"></div>
+    <div class="column is-2">
+      <button
+        class="button is-link is-outlined is-fullwidth m-1"
+        (click)="back()"
+      >
+        <span> Anterior </span>
+      </button>
+    </div>
+    <div class="column is-2">
+      <button
+        class="button is-link is-outlined is-fullwidth m-1"
+        [disabled]="
+          experiencias.length == 0 ||
+          saving_next ||
+          !formDataExperienciaGlobal.valid
+        "
+        (click)="next()"
+      >
+        <span *ngIf="!saving_next"> Siguiente </span>
+        <span *ngIf="saving_next"> Guardando...</span>
+      </button>
+    </div>
+  </div>
+</div>
+<form [formGroup]="formDataExperiencia">
+  <div class="modal" [ngClass]="{ 'is-active': showModalExperiencia }">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head has-background-primary">
+        <p class="modal-card-title has-text-light">
+          Agregar Experiencia Laboral
+        </p>
+        <button
+          class="delete"
+          aria-label="close"
+          (click)="showModalExperiencia = false"
+        ></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="columns s-mobile is-multiline is-marginless">
+          <div class="column">
+            <div class="field">
+              <label class="label">* Empresa</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Empresa"
+                  class="input"
+                  type="text"
+                  placeholder="Ingresa de la empresa"
+                  maxlength="150"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field">
+              <label class="label">* Cargo</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Cargo"
+                  class="input"
+                  type="text"
+                  placeholder="Ingresa el cargo"
+                  maxlength="50"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">* Descripción</label>
+          <textarea
+            formControlName="Descripcion"
+            class="textarea"
+            rows="3"
+            placeholder="Escribe la descripción de tu trabajo"
+            maxlength="500"
+          ></textarea>
+        </div>
+        <div class="columns s-mobile is-multiline is-marginless">
+          <div class="column">
+            <div class="field">
+              <label class="label">* Fecha de Inicio</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Fechaini"
+                  class="input"
+                  type="date"
+                  placeholder="Ingresa fecha inicio"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field" *ngIf="!formDataExperiencia.value.Actual">
+              <label class="label"> Fecha de Fin</label>
+              <div class="control is-small">
+                <input
+                  formControlName="Fechafin"
+                  class="input"
+                  type="date"
+                  placeholder="Ingresa fecha de finalización"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="Actual" />
+            Trabajo actualmente en esta empresa
+          </label>
+        </div>
+        <div class="panel-block">* Campos obligatorios</div>
+      </section>
+      <footer class="modal-card-foot">
+        <button
+          class="button is-success"
+          [disabled]="!formDataExperiencia.valid || savingExperiencia"
+          (click)="saveExperiencia()"
+        >
+          <span class="icon is-small">
+            <i class="far fa-save"></i>
+          </span>
+          <span *ngIf="!savingExperiencia"> Guardar </span>
+          <span *ngIf="savingExperiencia"> Guardando...</span>
+        </button>
+        <button class="button is-danger" (click)="showModalExperiencia = false">
+          <span class="icon is-small">
+            <i class="fas fa-ban"></i>
+          </span>
+          <span>Cancelar</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+</form>
+
+<div class="modal" [ngClass]="{ 'is-active': showModalBorrarExperiencia }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Borrar Experiencia Laboral</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showModalBorrarExperiencia = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      Esta seguro que desea eliminar el registro de la experiencia?
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-success"
+        [disabled]="deletingExperiencia"
+        (click)="deleteExperiencia()"
+      >
+        <span class="icon is-small">
+          <i class="far fa-save"></i>
+        </span>
+        <span *ngIf="!deletingExperiencia"> Borrar </span>
+        <span *ngIf="deletingExperiencia"> Borrando...</span>
+      </button>
+      <button
+        class="button is-danger"
+        (click)="showModalBorrarExperiencia = false"
+      >
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cancelar</span>
+      </button>
+    </footer>
+  </div>
+</div>
+
+<form [formGroup]="formDataHabilidad">
+  <div class="modal" [ngClass]="{ 'is-active': showModalHabilidad }">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head has-background-primary">
+        <p class="modal-card-title has-text-light">Agregar Habilidad Laboral</p>
+        <button
+          class="delete"
+          aria-label="close"
+          (click)="showModalHabilidad = false"
+        ></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">* Descripción</label>
+          <div class="control is-small">
+            <input
+              formControlName="Descripcion"
+              class="input"
+              type="text"
+              placeholder="Ingresa la descripción de tu habilidad."
+              maxlength="50"
+            />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">* Experiencia</label>
+          <div class="control is-small">
+            <input
+              formControlName="Experiencia"
+              class="input"
+              type="number"
+              placeholder="Ingresa los años de experiencia"
+            />
+          </div>
+        </div>
+        <div class="panel-block">* Campos obligatorios</div>
+      </section>
+      <footer class="modal-card-foot">
+        <button
+          class="button is-success"
+          [disabled]="!formDataHabilidad.valid || savingHabilidad"
+          (click)="saveHabilidad()"
+        >
+          <span class="icon is-small">
+            <i class="far fa-save"></i>
+          </span>
+          <span *ngIf="!savingHabilidad"> Guardar </span>
+          <span *ngIf="savingHabilidad"> Guardando...</span>
+        </button>
+        <button class="button is-danger" (click)="showModalHabilidad = false">
+          <span class="icon is-small">
+            <i class="fas fa-ban"></i>
+          </span>
+          <span>Cancelar</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+</form>
+
+<div class="modal" [ngClass]="{ 'is-active': showModalBorrarHabilidad }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Borrar Habilidad Laboral</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showModalBorrarHabilidad = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      Esta seguro que desea eliminar el registro de la habilidad?
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-success"
+        [disabled]="deletingHabilidad"
+        (click)="deleteHabilidad()"
+      >
+        <span class="icon is-small">
+          <i class="far fa-save"></i>
+        </span>
+        <span *ngIf="!deletingHabilidad"> Borrar </span>
+        <span *ngIf="deletingHabilidad"> Borrando...</span>
+      </button>
+      <button
+        class="button is-danger"
+        (click)="showModalBorrarHabilidad = false"
+      >
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cancelar</span>
+      </button>
+    </footer>
+  </div>
+</div>
+
+<form [formGroup]="formDataReferencia">
+  <div class="modal" [ngClass]="{ 'is-active': showModalReferencia }">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head has-background-primary">
+        <p class="modal-card-title has-text-light">
+          Agregar Referencia Laboral
+        </p>
+        <button
+          class="delete"
+          aria-label="close"
+          (click)="showModalReferencia = false"
+        ></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">* Empresa</label>
+          <div class="control is-small">
+            <input
+              formControlName="Empresa"
+              class="input"
+              type="text"
+              placeholder="Ingresa la empresa de tu contacto de referencia."
+              maxlength="50"
+            />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">* Nombre</label>
+          <div class="control is-small">
+            <input
+              formControlName="Nombre"
+              class="input"
+              type="text"
+              placeholder="Ingresa el nombre de tu contacto de referencia."
+              maxlength="50"
+            />
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">* Telefono</label>
+          <div class="control is-small">
+            <input
+              formControlName="Telefono"
+              class="input"
+              type="text"
+              placeholder="Ingresa el telefono de tu contacto de referencia."
+              maxlength="50"
+            />
+          </div>
+        </div>
+        <div class="panel-block">* Campos obligatorios</div>
+      </section>
+      <footer class="modal-card-foot">
+        <button
+          class="button is-success"
+          [disabled]="!formDataReferencia.valid || savingReferencia"
+          (click)="saveReferencia()"
+        >
+          <span class="icon is-small">
+            <i class="far fa-save"></i>
+          </span>
+          <span *ngIf="!savingReferencia"> Guardar </span>
+          <span *ngIf="savingReferencia"> Guardando...</span>
+        </button>
+        <button class="button is-danger" (click)="showModalReferencia = false">
+          <span class="icon is-small">
+            <i class="fas fa-ban"></i>
+          </span>
+          <span>Cancelar</span>
+        </button>
+      </footer>
+    </div>
+  </div>
+</form>
+
+<div class="modal" [ngClass]="{ 'is-active': showModalBorrarReferencia }">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head has-background-primary">
+      <p class="modal-card-title has-text-light">Borrar Referencia Laboral</p>
+      <button
+        class="delete"
+        aria-label="close"
+        (click)="showModalBorrarReferencia = false"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      Esta seguro que desea eliminar el registro de la referencia?
+    </section>
+    <footer class="modal-card-foot">
+      <button
+        class="button is-success"
+        [disabled]="deletingReferencia"
+        (click)="deleteReferencia()"
+      >
+        <span class="icon is-small">
+          <i class="far fa-save"></i>
+        </span>
+        <span *ngIf="!deletingReferencia"> Borrar </span>
+        <span *ngIf="deletingReferencia"> Borrando...</span>
+      </button>
+      <button
+        class="button is-danger"
+        (click)="showModalBorrarReferencia = false"
+      >
+        <span class="icon is-small">
+          <i class="fas fa-ban"></i>
+        </span>
+        <span>Cancelar</span>
+      </button>
+    </footer>
+  </div>
+</div>

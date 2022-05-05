@@ -1,0 +1,108 @@
+<form [formGroup]="formData">
+  <div class="container">
+    <nav class="panel">
+      <p class="panel-heading">Información General</p>
+      <div class="columns s-mobile is-multiline is-marginless">
+        <div class="column">
+          <div class="field">
+            <label class="label">* Titulo</label>
+            <div class="control is-small">
+              <input
+                formControlName="Titulo"
+                class="input"
+                type="text"
+                placeholder="Ingresa el titulo de tu carrera de estudio."
+              />
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">* Categorias</label>
+            <div class="select is-fullwidth">
+              <select formControlName="Idcategoria">
+                <option [value]="item.Id" *ngFor="let item of categorias">
+                  {{ item.Descripcion }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">* Pretensión Salarial</label>
+            <div class="control is-small">
+              <input
+                formControlName="Salario"
+                class="input"
+                type="number"
+                placeholder="Ingresa tu pretensión salarial."
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns s-mobile is-multiline is-marginless">
+        <div class="column">
+          <div class="field">
+            <label class="label">* Pais</label>
+            <div class="select is-fullwidth">
+              <select formControlName="Idpais">
+                <option [value]="item.Id" *ngFor="let item of paises">
+                  {{ item.Nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label class="label">* Ciudad</label>
+            <div class="control is-small">
+              <input
+                formControlName="Ciudad"
+                class="input"
+                type="text"
+                placeholder="Ingresa el nombre de tu ciudad."
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="columns s-mobile is-multiline is-marginless">
+        <div class="column">
+          <div class="field">
+            <label class="label">* Presentación</label>
+            <textarea
+              formControlName="Presentacion"
+              class="textarea"
+              placeholder="Escribe una breve reseña de tu perfil."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="panel-block">* Campos obligatorios</div>
+      <div class="columns is-vcentered is-marginless">
+        <div class="column is-8"></div>
+        <div class="column is-2">
+          <button
+            class="button is-link is-outlined is-fullwidth m-1"
+            (click)="back()"
+          >
+            <span> Anterior </span>
+          </button>
+        </div>
+        <div class="column is-2">
+          <button
+            class="button is-link is-outlined is-fullwidth m-1"
+            [disabled]="!formData.valid || saving"
+            (click)="save()"
+          >
+            <span *ngIf="!saving"> Publicar Curriculum </span>
+            <span *ngIf="saving"> Publicando...</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </div>
+</form>
